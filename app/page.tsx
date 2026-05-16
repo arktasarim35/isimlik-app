@@ -158,6 +158,7 @@ export default function Home() {
   const [templateKey, setTemplateKey] = useState<TemplateKey>("ayyildiz");
   const [name, setName] = useState("");
   const [title, setTitle] = useState("");
+  const [singleLineName, setSingleLineName] = useState("");
   const [fontFamily, setFontFamily] = useState(
     "Georgia, 'Times New Roman', serif"
   );
@@ -188,29 +189,42 @@ export default function Home() {
       const nameY = canvas.height * template.nameY;
       const titleY = canvas.height * template.titleY;
 
-      drawGoldText(
-        ctx,
-        name,
-        x,
-        nameY,
-        template.nameSize,
-        canvas.width * template.maxNameWidth,
-        fontFamily,
-        "700"
-      );
+      if (singleLineName.trim()) {
+  drawGoldText(
+    ctx,
+    singleLineName,
+    x,
+    canvas.height * 0.53,
+    template.nameSize + 4,
+    canvas.width * 0.75,
+    fontFamily,
+    "700"
+  );
+} else {
+  drawGoldText(
+    ctx,
+    name,
+    x,
+    nameY,
+    template.nameSize,
+    canvas.width * template.maxNameWidth,
+    fontFamily,
+    "700"
+  );
 
-      if (title.trim()) {
-        drawGoldText(
-          ctx,
-          title,
-          x,
-          titleY,
-          template.titleSize,
-          canvas.width * template.maxTitleWidth,
-          fontFamily,
-          "600"
-        );
-      }
+  if (title.trim()) {
+    drawGoldText(
+      ctx,
+      title,
+      x,
+      titleY,
+      template.titleSize,
+      canvas.width * template.maxTitleWidth,
+      fontFamily,
+      "600"
+    );
+  }
+}
 
       if (download) {
         const cleanName = name
@@ -241,7 +255,7 @@ export default function Home() {
   };
 
   load();
-}, [templateKey, name, title, fontFamily]);
+}, [templateKey, name, title, singleLineName, fontFamily]);
 
   return (
     <main className="min-h-screen bg-neutral-950 text-neutral-100 p-4 md:p-8">
@@ -303,6 +317,19 @@ export default function Home() {
                 <option value="Arial, Helvetica, sans-serif">Modern Sans</option>
               </select>
             </div>
+            <div>
+  <label className="block text-sm text-neutral-400 mb-2">
+    Tek Satır AdSoyad
+  </label>
+
+  <input
+    value={singleLineName}
+    onChange={(e) => setSingleLineName(e.target.value)}
+    className="w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3 outline-none focus:border-yellow-400"
+    placeholder="Örn: Ali Rıza Karakaya"
+  />
+</div>
+            
           </div>
 
           <div className="mt-6 rounded-xl border border-neutral-800 bg-neutral-950 p-4 text-sm text-neutral-400">
