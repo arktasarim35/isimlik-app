@@ -1,10 +1,7 @@
 "use client";
-
 import React, { useEffect, useRef, useState } from "react";
 import { Download, Sparkles } from "lucide-react";
-
 type TemplateKey = "ayyildiz" | "bayrak" | "harita";
-
 type TemplateConfig = {
   label: string;
   fileName: string;
@@ -25,12 +22,12 @@ const TEMPLATES: Record<TemplateKey, TemplateConfig> = {
   fileName: "ayyildiz-isimlik",
   imageSrc: "/ayyildiz.png",
   textX: 0.50,
-  nameY: 0.42,
-  titleY: 0.68,
-  maxNameWidth: 0.55,
-  maxTitleWidth: 0.42,
-  nameSize: 44,
-  titleSize: 18,
+  nameY: 0.35,
+  titleY: 0.80,
+  maxNameWidth: 0.95,
+  maxTitleWidth: 0.85,
+  nameSize: 60,
+  titleSize: 40,
   removeYellowCorners: false,
 },
 bayrak: {
@@ -38,12 +35,12 @@ bayrak: {
   fileName: "bayrak-isimlik",
   imageSrc: "/bayrak.png",
   textX: 0.50,
-  nameY: 0.42,
-  titleY: 0.68,
-  maxNameWidth: 0.58,
-  maxTitleWidth: 0.45,
-  nameSize: 44,
-  titleSize: 18,
+  nameY: 0.40,
+  titleY: 0.70,
+  maxNameWidth: 0.85,
+  maxTitleWidth: 0.85,
+  nameSize: 50,
+  titleSize: 30,
   removeYellowCorners: false,
 },
 harita: {
@@ -51,12 +48,12 @@ harita: {
   fileName: "harita-isimlik",
   imageSrc: "/harita.png",
   textX: 0.50,
-  nameY: 0.45,
-  titleY: 0.68,
-  maxNameWidth: 0.55,
-  maxTitleWidth: 0.43,
-  nameSize: 44,
-  titleSize: 18,
+  nameY: 0.35,
+  titleY: 0.70,
+  maxNameWidth: 0.95,
+  maxTitleWidth: 0.95,
+  nameSize: 60,
+  titleSize: 40,
   removeYellowCorners: true,
 },
 };
@@ -159,12 +156,11 @@ export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const [templateKey, setTemplateKey] = useState<TemplateKey>("ayyildiz");
-  const [name, setName] = useState("BURAK YILMAZ");
-  const [title, setTitle] = useState("GENEL MÜDÜR");
+  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
   const [fontFamily, setFontFamily] = useState(
     "Georgia, 'Times New Roman', serif"
   );
-
   const template = TEMPLATES[templateKey];
 
   function drawCanvas(download = false) {
@@ -194,7 +190,7 @@ export default function Home() {
 
       drawGoldText(
         ctx,
-        name.toLocaleUpperCase("tr-TR"),
+        name,
         x,
         nameY,
         template.nameSize,
@@ -206,7 +202,7 @@ export default function Home() {
       if (title.trim()) {
         drawGoldText(
           ctx,
-          title.toLocaleUpperCase("tr-TR"),
+          title,
           x,
           titleY,
           template.titleSize,
@@ -238,8 +234,14 @@ export default function Home() {
   }
 
   useEffect(() => {
+  const load = async () => {
+    await document.fonts.load(`700 40px Montserrat`);
+    await document.fonts.ready;
     drawCanvas(false);
-  }, [templateKey, name, title, fontFamily]);
+  };
+
+  load();
+}, [templateKey, name, title, fontFamily]);
 
   return (
     <main className="min-h-screen bg-neutral-950 text-neutral-100 p-4 md:p-8">
