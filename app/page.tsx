@@ -304,7 +304,8 @@ export default function Home() {
           </div>
 
           <div className="mt-6 rounded-xl border border-neutral-800 bg-neutral-950 p-4 text-sm text-neutral-400">
-            Şablonlar uygulamanın içinden otomatik gelir. Her seferinde PNG yüklemene gerek yok cnm.
+            Nakkaş Payidar için Ali Rıza Karakaya Tarafından Hazırlanmıştır.
+            2026© Tüm Hakları Saklıdır.
           </div>
 
           <button
